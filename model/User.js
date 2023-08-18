@@ -19,6 +19,16 @@ const UserSchema = new Schema ({
         type: Date,
         require: true,
         default: Date.now()
+    },
+    address: {
+        type: String
+    },
+    phone: {
+        type: String
+    },
+    image: {
+        //it is still remain complete it letter
+        type: Buffer
     }
 })
 
