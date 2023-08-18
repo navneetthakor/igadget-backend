@@ -1,0 +1,2 @@
+product model - whole
+User model - image upload remaining

@@ -7,13 +7,13 @@ const express = require('express');
 const app = express();
 const port = 5000;
 
+// middleware to parse the json object 
+app.use(express.json());
 
-app.get('/',(req,res)=>{
-    res.json({
-        name : 'Navneet Kumar',
-        id : '21CP031'
-    });
-})
+//middlewares to redirect at particular url
+app.use('/storeadmin',require('./routes/admin'));
+app.use('/users',require('./routes/user'));
+app.use('/storeproducts',require('./routes/products'));
 
 // to start listening on port number : 5000
 app.listen(port, ()=>{
