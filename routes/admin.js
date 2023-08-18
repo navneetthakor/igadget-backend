@@ -58,7 +58,7 @@ async (req,res)=>{
     }
     const jwt_secret = "tonystarkismyrolemodel";
     const authtoken = jwt.sign(data, jwt_secret);
-    res.send({authtoken: authtoken, signal: 'green'});
+    res.json({authtoken: authtoken, signal: 'green'});
 
     }catch(e){
         console.log(error);
@@ -107,11 +107,34 @@ async(req,res)=>{
         }
         const jwt_secret = "tonystarkismyrolemodel";
         const authtoken = jwt.sign(data, jwt_secret);
-        res.send({authtoken: authtoken, signal: 'green'});
+        res.json({authtoken: authtoken, signal: 'green'});
         
 
     }catch(e){
         console.log(error);
-        res.status(500).send("some error occured");
+        res.status(500).json({error:"some error occured", signal: 'red'});
+    }
+})
+
+// ----------------ROUTE:3 login user using authtoken (previously login required)-----------------------------------
+router.post('/getuser',
+fetchAdmin,
+async (req,res)=>{
+    try {
+
+        // fetching the id provided by fetchAdmin middleware 
+        const adminId = req.admin.id;
+
+        // gethering the details of admin with provided id 
+        const admin = await Admin.findById(adminId).select("-password");
+        if(!admin){
+           return res.status(401).json({error: "Authentication fail please login", signal: 'red'});
+        }
+
+        res.json({admin:admin, signal: 'green'});
+        // console.log(user)
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({error:"Internal Server Error", signal: "red"}); 
     }
 })
