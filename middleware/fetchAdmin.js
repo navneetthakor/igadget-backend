@@ -25,3 +25,5 @@ const fetchAdmin = async (req,res,next) =>{
         res.status(500).json({error:"some error occured", signal: 'red'});
     }
 }
+
+module.exports = fetchAdmin;

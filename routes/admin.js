@@ -1,6 +1,6 @@
 // to use the express 
 const express = require('express');
-const router = express.Router;
+const router = express.Router();
 
 // to validate the given parameter in request 
 const {body, validationResult } = require('express-validator');
@@ -15,13 +15,15 @@ const bcrypt = require('bcryptjs');
 // to provide authentication token 
 const jwt = require('jsonwebtoken');
 
-
+// importing fetchAdmin middleware
+// will use it in '/getAdmin' end point
+const fetchAdmin = require('../middleware/fetchAdmin');
 
 
 // --------------------------------ROUTE:1 admin signup -----------------------------------
 router.post('/createadmin',
 [
-    body('name', "Please enter name ").isEmpty(),
+    body('name', "Please enter name ").not().isEmpty(),
     body('email', "enter a valid email").isEmail(),
     body('password', "please enter password with length more then 6 ").isLength({min:6})
 ],
@@ -117,9 +119,7 @@ async(req,res)=>{
 })
 
 // ----------------ROUTE:3 login user using authtoken (previously login required)-----------------------------------
-router.post('/getuser',
-fetchAdmin,
-async (req,res)=>{
+router.post('/getuser', fetchAdmin, async (req,res)=>{
     try {
 
         // fetching the id provided by fetchAdmin middleware 
@@ -138,3 +138,5 @@ async (req,res)=>{
         res.status(500).json({error:"Internal Server Error", signal: "red"}); 
     }
 })
+
+module.exports = router;
