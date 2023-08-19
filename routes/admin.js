@@ -130,9 +130,8 @@ router.post('/getadmin', fetchAdmin, async (req,res)=>{
         if(!admin){
            return res.status(401).json({error: "Authentication fail please login", signal: 'red'});
         }
-
-        res.json({admin:admin, signal: 'green'});
-        // console.log(user)
+        return res.json({admin:admin, signal: 'green'});
+        
     } catch (error) {
         console.log(error);
         res.status(500).json({error:"Internal Server Error", signal: "red"}); 
