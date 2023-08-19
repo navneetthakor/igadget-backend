@@ -9,12 +9,18 @@ const {body, validationResult } = require('express-validator');
 // it is model which we created previously 
 const User = require('../model/User');
 
+// to provide authtoken (for digital signature) 
+const jwt = require('jsonwebtoken');
+
 // to encrypt the password 
 const bcrypt = require('bcryptjs');
 
+//fetchUser middleware to fetch data from auth-token
+const fecthUser = require('../middleware/fetchUser');
+
 
 // --------------------------ROUTE:1 create user account ----------------------------------------------------------
-router.post('createuser',
+router.post('/createuser',
 [
     body("name", "please enter name").not().isEmpty(),
     body("email", "please enter valid email").isEmail(),
@@ -36,7 +42,7 @@ async (req,res)=>{
     }
 
     // encrypt the password using bcrypt
-    const salt = await bcrypt.getSaltSync(10);
+    const salt = await bcrypt.genSaltSync(10);
     const securePas = await bcrypt.hashSync(req.body.password, salt);
 
     // creating and saving user in backend 
@@ -58,13 +64,13 @@ async (req,res)=>{
     return res.json({authtoken: authtoken, signal: "green"});
 
     }catch(e){
-        console.log(error);
+        console.log(e);
         res.status(500).json({email: "some error occured", signal: 'red'});
     }
 })
 
 
-// --------------------------ROUTE:1 login to account (previous login not require) ----------------------------------------------------------
+// --------------------------ROUTE:2 login to account (previous login not require) ----------------------------------------------------------
 router.post('/login',
 [
     body("email", "please enter valid email").isEmail(),
@@ -74,7 +80,7 @@ async (req,res)=>{
     try{
     // check validation of parameters provided body 
     const err = validationResult(req);
-    if(err.isEmpty()){
+    if(!err.isEmpty()){
         return res.status(400).json({error: err.array(), signal: "red"});
     }
 
@@ -108,8 +114,8 @@ async (req,res)=>{
 })
 
 
-// --------------------------ROUTE:2 login to accoutn with authtoken ( previous login not require) ----------------------------------------------------------
-router.post('/getuser', fetchuser ,async (req,res)=>{
+// --------------------------ROUTE:3 login to accoutn with authtoken ( previous login not require) ----------------------------------------------------------
+router.post('/getuser', fecthUser ,async (req,res)=>{
 
     try {
 

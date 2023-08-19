@@ -1,4 +1,4 @@
-// here we are collecting details from token that we asigned while admin creation and login
+// here we are collecting details from token that we asigned while user creation and login
 // so we required jsonwebtoken 
 const jwt = require('jsonwebtoken');
 const jwt_secret = "tonystarkismyrolemodel";
@@ -14,7 +14,7 @@ const fetchAdmin = async (req,res,next) =>{
 
     // collect data from authentication token 
     const data = jwt.verify(token, jwt_secret);
-    req.admin = data.admin;
+    req.user = data.user;
 
     // call actual function associated with it 
     next();
