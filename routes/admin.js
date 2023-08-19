@@ -75,7 +75,7 @@ async (req,res)=>{
 router.post('/login',
 [
     body("email","please enter valid email ").isEmail(),
-    body("password", "Please enter valid pasword ").isEmpty()
+    body("password", "Please enter valid pasword ").not().isEmpty()
 ],
 async(req,res)=>{
     try {
@@ -119,7 +119,7 @@ async(req,res)=>{
 })
 
 // ----------------ROUTE:3 login user using authtoken (previously login required)-----------------------------------
-router.post('/getuser', fetchAdmin, async (req,res)=>{
+router.post('/getadmin', fetchAdmin, async (req,res)=>{
     try {
 
         // fetching the id provided by fetchAdmin middleware 

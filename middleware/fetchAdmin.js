@@ -1,6 +1,5 @@
 // here we are collecting details from token that we asigned while user creation and login
 // so we required jsonwebtoken 
-const { header } = require('express-validator');
 const jwt = require('jsonwebtoken');
 const jwt_secret = "tonystarkismyrolemodel";
 
