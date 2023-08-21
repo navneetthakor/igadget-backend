@@ -1,27 +1,33 @@
 const mongoose = require('mongoose');
+const Mixed = require('mongoose/lib/schema/mixed');
 const { Schema } = mongoose;
 
-productSchema = Schema({
-    image: [{
-        type:Buffer,
+// to use as reference (userid)
+// const User = require('./User');
+
+
+const productSchema = new Schema ({
+    image: {
+        type:Array,
+        of: Buffer,
         require: true
-    }],
+    },
     title:{
         type: String,
-        require: true,
+        require: true
     },
     description:{
         overview: {
             company: {type: String},
             model: {type: String},
-            height: {type: Number},
+            height: {type: String},
             width: {type: String},
             other: [{
                 type: String,
-                require: true
             }]
         },
         brief: {type: String},
+        type: Mixed,
         require: true
     },
     dummyPrice:{
@@ -31,11 +37,18 @@ productSchema = Schema({
         type: Number,
         require: true
     },
-    rating: [{
-        userId: { type: mongoose.Types.ObjectId },
-        rating: { type: Number },
-        comment: { type: String }
-    }]
+    totrating:{
+        type: Number,
+        default: Number.MIN_VALUE
+    },
+    ratings: {
+        type: Array,
+        of: {
+            userId: { type: mongoose.Types.ObjectId },
+            rating: { type: Number },
+            comment: { type: String }
+        }
+    }
 })
 
 module.exports = mongoose.model('Product', productSchema);

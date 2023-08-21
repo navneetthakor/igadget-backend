@@ -13,7 +13,7 @@ app.use(express.json());
 //middlewares to redirect at particular url
 app.use('/storeadmin',require('./routes/admin'));
 app.use('/users',require('./routes/user'));
-// app.use('/storeproducts',require('./routes/products'));
+app.use('/storeproducts',require('./routes/products'));
 
 // to start listening on port number : 5000
 app.listen(port, ()=>{
