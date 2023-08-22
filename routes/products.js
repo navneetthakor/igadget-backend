@@ -5,29 +5,21 @@ const router = express.Router();
 // to validate the parameters provided by the user 
 const {body, validationResult} = require('express-validator');
 
-// to get multiple images uploaded by user 
-// const multer = require('multer');
-
 // to get connectivity with collection of product in backend using mongooes 
 const Product = require('../model/Product');
+
+// to upload images 
+const upload = require('../middleware/fetchImages');
 
 
 // -------------------------ROUTE:1 to add product -------------------------------------
 router.post('/addprod',
 [
-    body("image","please provide at least 1 image").not().isEmpty(),
     body("title","please enter tiltle with min length of : 6").isLength({min:6}),
     body("description","please enter valid descretion format").not().isEmpty(),
     body("price","please enter valid price.").isNumeric()
 ],
-// multer({
-//     storage: multer.diskStorage({
-//         destination: './uploads',
-//         filename: (req,file,cb) => {
-//             cb(null, (file.originalname + Date.now()));
-//         }
-//     })
-// }),
+upload.array('image[]'),
 async (req,res)=>{
     try{
     // check the validation for given parameters in body 
@@ -37,11 +29,14 @@ async (req,res)=>{
     }
 
     // taking the images 
-    // {it will completed letter}
-
+    
+    let im;
     // to add product in backend 
+    if(req.file){
+        im = req.file.path;
+    }
     Product.create({
-        image: req.body.image,
+        image: im,
         title: req.body.title,
         description: req.body.description,
         dummyPrice: req.body.dummyPrice,

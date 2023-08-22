@@ -10,7 +10,7 @@ const productSchema = new Schema ({
     image: {
         type:Array,
         of: Buffer,
-        require: true
+       
     },
     title:{
         type: String,
