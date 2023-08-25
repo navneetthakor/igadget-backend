@@ -10,14 +10,13 @@ const productSchema = new Schema ({
     image: {
         type:Array,
         of: Buffer,
-       
     },
     title:{
         type: String,
         require: true
     },
     description:{
-        overview: {
+        overview : {
             company: {type: String},
             model: {type: String},
             height: {type: String},
@@ -26,7 +25,6 @@ const productSchema = new Schema ({
                 type: String,
             }]
         },
-        brief: {type: String},
         type: Mixed,
         require: true
     },
