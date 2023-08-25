@@ -14,6 +14,7 @@ app.use(express.json());
 app.use('/storeadmin',require('./routes/admin'));
 app.use('/users',require('./routes/user'));
 app.use('/storeproducts',require('./routes/products'));
+app.use('/storepurchase',require('./routes/purchase'));
 
 // to start listening on port number : 5000
 app.listen(port, ()=>{
