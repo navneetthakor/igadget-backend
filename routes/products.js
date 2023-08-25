@@ -64,7 +64,6 @@ async (req,res)=>{
 
     return res.json({product: Product, signal: "green"});
     }catch(e){
-        console.log(e);
         res.status(500).json({email: "Internal server error", signal: 'red'});
     }
 
@@ -72,7 +71,7 @@ async (req,res)=>{
 })
 
 // -------------------------ROUTE:2 to delete product -------------------------------------
-router.post('/delete:id',
+router.delete('/deleteprod/:id',
 fetchAdmin,
 async(req,res)=>{
     try {
@@ -97,14 +96,13 @@ async(req,res)=>{
         await Product.findByIdAndDelete(req.params.id);
         return res.json({signal: "green"});
     } catch (error) {
-        console.log(e);
         res.status(500).json({email: "Internal server error", signal: 'red'});
     }
 })
 
 
 // -------------------------ROUTE:2 to delete product -------------------------------------
-router.post('/updateprod:id',
+router.put('/updateprod/:id',
 fetchAdmin,
 async(req,res)=>{
     try {
@@ -151,7 +149,6 @@ async(req,res)=>{
         const updatProd = await Product.findByIdAndUpdate(req.params.id, {$set: prod}, {new: true});
         res.json({product: updatProd, signal: "green"});
     }catch (error) {
-        console.log(e);
         res.status(500).json({email: "Internal server error", signal: 'red'});
     }
 })
