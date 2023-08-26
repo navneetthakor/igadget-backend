@@ -20,3 +20,7 @@ app.use('/storepurchase',require('./routes/purchase'));
 app.listen(port, ()=>{
     console.log("backend is active at port number : ", port);
 })
+
+
+// first part is completed on 25/08/2023 at 00:37 AM (only images part left that will be completed letter when
+// I will complete the react components )

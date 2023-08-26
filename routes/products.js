@@ -101,7 +101,7 @@ async(req,res)=>{
 })
 
 
-// -------------------------ROUTE:2 to delete product -------------------------------------
+// -------------------------ROUTE:2 to update product -------------------------------------
 router.put('/updateprod/:id',
 fetchAdmin,
 async(req,res)=>{
