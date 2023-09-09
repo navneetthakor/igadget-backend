@@ -10,6 +10,10 @@ const port = 5000;
 // middleware to parse the json object 
 app.use(express.json());
 
+// Middleware to parse form data
+const bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded({ extended: true }));
+
 //middlewares to redirect at particular url
 app.use('/storeadmin',require('./routes/admin'));
 app.use('/users',require('./routes/user'));

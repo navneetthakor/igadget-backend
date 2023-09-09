@@ -3,10 +3,13 @@ const multer = require('multer');
 
 // to store the images 
 const storage = multer.diskStorage({
-    destination: 'uploads/',
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
     filename: (req, file, cb) => {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         let ext = path.extname(file.originalname);
-        cb(null,Date.now() + ext);
+        cb(null, uniqueSuffix + ext);
     }
 })
 
@@ -23,9 +26,6 @@ const upload = multer({
         }else{
             cb(null,false);
         }
-    },
-    limits: {
-        fileSize: 2048 * 2048 * 2
     }
 })
 
