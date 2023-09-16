@@ -17,6 +17,7 @@ const upload = require("../middleware/fetchImages");
 // importing fetchAdmin middleware
 // will use it in '/getAdmin' end point
 const fetchAdmin = require("../middleware/fetchAdmin");
+const { sign } = require("jsonwebtoken");
 
 // -------------------------ROUTE:1 to add product -------------------------------------
 router.post(
@@ -107,7 +108,7 @@ router.delete("/deleteprod/:id", fetchAdmin, async (req, res) => {
   }
 });
 
-// -------------------------ROUTE:2 to update product -------------------------------------
+// -------------------------ROUTE:3 to update product -------------------------------------
 router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
   try {
     // first of all check whether this request is made by admin or not
@@ -165,5 +166,23 @@ router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
     res.status(500).json({ email: "Internal server error", signal: "red" });
   }
 });
+
+// -----------------------ROUT:4 fetch all the products :  login required-----------------.
+router.post('/fetchallprods', fetchAdmin, async (req,res)=>{
+    try {
+        
+        // admin exists or note (email check)
+        let admin = await Admin.findOne({email});
+        if(!admin){
+            res.status(400).json({error: "Please login first", signal: "red"});
+        }
+
+    const prods = await Note.find();
+    res.json(prods)
+    } catch (error) {
+    console.log(error);
+    res.status(500).send("some error occured");
+    }
+})
 
 module.exports = router;
