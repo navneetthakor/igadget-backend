@@ -167,17 +167,18 @@ router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
   }
 });
 
-// -----------------------ROUT:4 fetch all the products :  login required-----------------.
-router.post('/fetchallprods', fetchAdmin, async (req,res)=>{
+// -----------------------ROUT:4 fetch all the products -----------------.
+router.post('/fetchallprods', async (req,res)=>{
     try {
-        
+        // I think admin login note required to fetch the products
         // admin exists or note (email check)
-        let admin = await Admin.findOne({email});
-        if(!admin){
-            res.status(400).json({error: "Please login first", signal: "red"});
-        }
+        // let admin = await Admin.findOne({email});
+        // if(!admin){
+        //     res.status(400).json({error: "Please login first", signal: "red"});
+        // }
 
-    const prods = await Note.find();
+    const prods = await Product.find();
+    console.log(prods);
     res.json(prods)
     } catch (error) {
     console.log(error);

@@ -5,8 +5,11 @@ connectToMongo();
 // to connect with backend and respond to the requests
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const port = 5000;
 
+// to enabel cors 
+app.use(cors());
 // middleware to parse the json object 
 app.use(express.json());
 
