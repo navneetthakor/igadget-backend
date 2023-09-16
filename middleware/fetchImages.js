@@ -4,12 +4,12 @@ const multer = require('multer');
 // to store the images 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'uploads/');
+        cb(null, '');
     },
     filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         let ext = path.extname(file.originalname);
-        cb(null, uniqueSuffix + ext);
+        cb(null,`public/${file.fieldname}_${uniqueSuffix}${ext}`.replace(/\\/g, '/'));
     }
 })
 

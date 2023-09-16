@@ -6,6 +6,7 @@ connectToMongo();
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const path = require('path')
 const port = 5000;
 
 // to enabel cors 
@@ -13,8 +14,12 @@ app.use(cors());
 // middleware to parse the json object 
 app.use(express.json());
 
+// making upload/ folder public so that I can fetch that images
+app.use('/public', express.static(path.join(__dirname, 'public')));
+
 // Middleware to parse form data
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
+const upload = require('./middleware/fetchImages');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 //middlewares to redirect at particular url
