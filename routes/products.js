@@ -27,6 +27,7 @@ router.post(
   [
     body("title", "please enter tiltle with min length of : 6").isLength({min: 6}),
     body("description", "please enter valid descretion format").not().isEmpty(),
+    body("prodname", "please enter valid product name").not().isEmpty(),
     body("price", "please enter valid price.").isNumeric(),
   ],
   async (req, res) => {
@@ -65,7 +66,7 @@ router.post(
           dummyPrice: req.body.dummyPrice,
           price: req.body.price,
           totrating: req.body.totrating,
-        //   ratings: req.body.ratings,
+          prodname: req.body.prodname
         });
       }
       temp.save();
@@ -186,10 +187,10 @@ async(req,res)=>{
 
   try{
     // this are the parameters that will be provided in req
-    const {page=1, pageSize=6, name='watch'} = req.query;
+    const {page=1, pageSize=6, prodname='watch'} = req.query;
     const skip = (page-1)*pageSize;
 
-    const prods = await Product.find({prodname:name})
+    const prods = await Product.find({prodname:prodname})
     .skip(skip) //to skip the data that already fetched
     .limit(pageSize) // to send limited data
     .exec();
@@ -209,9 +210,9 @@ router.post('/fetchnamedprods',
 async (req,res)=>{
 
   try {
-    const{name='watch'} = req.query;
+    const{prodname='watch'} = req.query;
 
-    const prods = Product.find({prodname: name})
+    const prods = Product.find({prodname: prodname})
 
     res.json(prods);
   } catch (e) {
