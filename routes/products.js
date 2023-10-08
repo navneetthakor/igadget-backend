@@ -170,20 +170,55 @@ router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
 // -----------------------ROUT:4 fetch all the products -----------------.
 router.post('/fetchallprods', async (req,res)=>{
     try {
-        // I think admin login note required to fetch the products
-        // admin exists or note (email check)
-        // let admin = await Admin.findOne({email});
-        // if(!admin){
-        //     res.status(400).json({error: "Please login first", signal: "red"});
-        // }
-
     const prods = await Product.find();
-    console.log(prods);
+
     res.json(prods)
     } catch (error) {
     console.log(error);
     res.status(500).send("some error occured");
     }
+})
+
+
+// ------------------------ROUT:5 fetch limited data----------------------
+router.post('/fetchlimitprods',
+async(req,res)=>{
+
+  try{
+    // this are the parameters that will be provided in req
+    const {page=1, pageSize=6, name='watch'} = req.query;
+    const skip = (page-1)*pageSize;
+
+    const prods = await Product.find({prodname:name})
+    .skip(skip) //to skip the data that already fetched
+    .limit(pageSize) // to send limited data
+    .exec();
+
+    res.json(prods);
+
+  }
+  catch(e){
+    console.log(error);
+    res.status(500).send("some error occured");
+  }
+})
+
+
+// ----------------------ROUT:6 fetch all but pertucal named products----------------
+router.post('/fetchnamedprods', 
+async (req,res)=>{
+
+  try {
+    const{name='watch'} = req.query;
+
+    const prods = Product.find({prodname: name})
+
+    res.json(prods);
+  } catch (e) {
+    console.log(error);
+    res.status(500).send("some error occured");
+  }
+
 })
 
 module.exports = router;
