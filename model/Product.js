@@ -47,15 +47,12 @@ const productSchema = new Schema({
   totrating: {
     type: Number,
     default: Number.MIN_VALUE,
+  },
+  prodname: {
+    type:String,
+    require: true
   }
-//   ratings: {
-//     type: Array,
-//     of: {
-//       userId: { type: mongoose.Types.ObjectId },
-//       rating: { type: Number },
-//       comment: { type: String },
-//     },
-//   },
+
 });
 
 module.exports = mongoose.model("Product", productSchema);
