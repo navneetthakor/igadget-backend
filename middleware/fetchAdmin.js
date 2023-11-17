@@ -7,7 +7,7 @@ const fetchAdmin = async (req,res,next) =>{
     try{
 
     // get token from request header 
-    const token = req.header('auth-token');
+    const token = req.header('authtoken');
     if(!token){
        return res.status(401).json({error: "please login with valid authenticaiton token", signal: 'red'});
     }
@@ -20,7 +20,7 @@ const fetchAdmin = async (req,res,next) =>{
     next();
 
     }catch(e){
-        console.log(error);
+        console.log(e);
         res.status(500).json({error:"some error occured", signal: 'red'});
     }
 }
