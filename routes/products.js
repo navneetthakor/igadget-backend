@@ -199,7 +199,7 @@ async(req,res)=>{
 
   }
   catch(e){
-    console.log(error);
+    console.log(e);
     res.status(500).send("some error occured");
   }
 })
@@ -210,13 +210,14 @@ router.post('/fetchnamedprods',
 async (req,res)=>{
 
   try {
-    const{prodname='watch'} = req.query;
+    const {prodname= 'laptop'} = req.query;
 
-    const prods = Product.find({prodname: prodname})
+    const prods = await Product.find({prodname: prodname})
+    // console.log(prods);
 
     res.json(prods);
   } catch (e) {
-    console.log(error);
+    console.log(e);
     res.status(500).send("some error occured");
   }
 
