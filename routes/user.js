@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 // to validate the given parameter in request 
-const {body, validationResult } = require('express-validator');
+const {body, validationResult, check } = require('express-validator');
 
 // to get connectivity with collection of user in database
 // it is model which we created previously 
@@ -17,6 +17,10 @@ const bcrypt = require('bcryptjs');
 
 //fetchUser middleware to fetch data from auth-token
 const fecthUser = require('../middleware/fetchUser');
+const fetchAdmin = require('../middleware/fetchUser');
+
+// to use admin modal 
+const Admin = require('../model/Admin');
 
 
 // --------------------------ROUTE:1 create user account ----------------------------------------------------------
@@ -134,6 +138,29 @@ router.post('/getuser', fecthUser ,async (req,res)=>{
         res.status(500).json({error:"Internal Server Error", signal: "red"}); 
     }
  })
+
+
+//  ----------------------------- Route:4 fetchall Users (only for admin) ---------------
+router.post('/getallcustomers', async (req,res)=>{
+
+    try{
+        // extracting admin-id privided by fetchAdmin 
+        // const adminId = req.admin.id;
+    
+        // check whether such admin exsists or not 
+        // const admin = await Admin.findById(adminId);
+        // if(!admin) res.status(400).json({message: "You are not admin", signal: "red"});
+    
+        // now fetch all customers and send them to front-end 
+        const customers = await User.find();
+        res.json(customers);
+        // res.json({customers: customers, signal: "green"});
+    }
+    catch(e){
+        console.log(e);
+        res.status(500).json({message: "internal server error", signal: "red"});
+    }
+})
 
 
 module.exports = router;
