@@ -44,11 +44,7 @@ const productSchema = new Schema({
     type: Number,
     require: true,
   },
-  totrating: {
-    type: Number,
-    default: Number.MIN_VALUE,
-  },
-  prodname: {
+  category: {
     type:String,
     require: true
   }

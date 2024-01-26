@@ -27,7 +27,7 @@ router.post(
   [
     body("title", "please enter tiltle with min length of : 6").isLength({min: 6}),
     body("description", "please enter valid descretion format").not().isEmpty(),
-    body("prodname", "please enter valid product name").not().isEmpty(),
+    body("category", "please enter valid descretion format").not().isEmpty(),
     body("price", "please enter valid price.").isNumeric(),
   ],
   async (req, res) => {
