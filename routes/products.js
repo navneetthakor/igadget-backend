@@ -18,6 +18,7 @@ const upload = require("../middleware/fetchImages");
 // will use it in '/getAdmin' end point
 const fetchAdmin = require("../middleware/fetchAdmin");
 const { sign } = require("jsonwebtoken");
+const { model } = require("mongoose");
 
 // -------------------------ROUTE:1 to add product -------------------------------------
 router.post(
@@ -125,7 +126,7 @@ router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
     }
 
     // creating a temporory product to store parameters provided in request
-    const { title, description, dummyPrice, price, totrating, ratings } =
+    const { title, description, dummyPrice, price, category, company, model, width, height } =
       req.body;
     const prod = {};
 
@@ -141,11 +142,20 @@ router.put("/updateprod/:id", fetchAdmin, async (req, res) => {
     if (price) {
       prod.price = price;
     }
-    if (totrating) {
-      prod.totrating = totrating;
+    if (category) {
+      prod.category = totrating;
     }
-    if (ratings) {
-      prod.ratings = ratings;
+    if (company) {
+      prod.company = company;
+    }
+    if (model) {
+      prod.model = model;
+    }
+    if (width) {
+      prod.width = width;
+    }
+    if (height) {
+      prod.height = height;
     }
 
     // find product to be update
